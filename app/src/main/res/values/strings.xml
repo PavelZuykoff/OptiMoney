@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">OptiMoney</string>
+    <string name="action_settings">Настройки</string>
+    <string name="about">О программе</string>
+
+    <string-array name="types">
+        <item>Доход</item>
+        <item>Расход</item>
+    </string-array>
+</resources>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+
+    <TextView
+        android:id="@+id/current_date_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/tv_background_rounded_corners"
+        android:gravity="right"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:text="31 Декабря 2015"
+        android:textSize="25dp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/legend_background_rounded_corners"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="ДАТА:"
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/current_account_ballance_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/current_date_tv"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tv_background_rounded_corners"
+        android:gravity="right"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:text="+7000 RUB"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/current_date_tv"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/legend_background_rounded_corners"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="БАЛАНС:"
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/current_max_waste_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/current_account_ballance_tv"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tv_background_rounded_corners"
+        android:gravity="right"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:text="1000 RUB"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/current_account_ballance_tv"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/legend_background_rounded_corners"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="СУТОЧНЫЙ ЛИМИТ:"
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+
+
+
+
+</RelativeLayout>

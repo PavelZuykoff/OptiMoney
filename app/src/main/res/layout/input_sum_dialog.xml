@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:background="@color/colorPrimarySuperLight"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+<EditText
+        android:id="@+id/sumInputTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:maxLength="20"
+        android:textAlignment="textEnd"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="8dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:id="@+id/target_date_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/tv_background_rounded_corners"
+        android:gravity="right"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:text="Не установлена"
+        android:textSize="25dp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/legend_background_rounded_corners"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="ЦЕЛЕВАЯ ДАТА:"
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/accumulation_target_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/target_date_tv"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tv_background_rounded_corners"
+        android:inputType="numberDecimal"
+        android:gravity="right"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:text="0 RUB"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/target_date_tv"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/legend_background_rounded_corners"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="ЦЕЛЬ НАКОПЛЕНИЯ:"
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/accumulated_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accumulation_target_tv"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tv_background_rounded_corners"
+        android:gravity="right"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:text="0 RUB"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accumulation_target_tv"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/legend_background_rounded_corners"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="НАКОПЛЕНО:"
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/days_left_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accumulated_tv"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tv_background_rounded_corners"
+        android:gravity="right"
+        android:paddingBottom="3dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:text="0 ДНЕЙ"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accumulated_tv"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/legend_background_rounded_corners"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="ОСТАЛОСЬ КОПИТЬ:"
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/save_changes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="КОПИТЬ!"
+        android:background="@drawable/button_background_rounded_corners"
+        android:layout_below="@id/days_left_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</RelativeLayout>
