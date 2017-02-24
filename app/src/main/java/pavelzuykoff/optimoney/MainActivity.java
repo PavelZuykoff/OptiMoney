@@ -5,18 +5,19 @@ import android.content.DialogInterface;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import android.widget.DatePicker;
@@ -24,14 +25,19 @@ import android.widget.Spinner;
 
 import android.widget.Toast;
 
+import pavelzuykoff.optimoney.data.WorkWithDBContract;
+
 
 public class MainActivity extends AppCompatActivity {
+
 
     private final String TAG = "happy";
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     public String currency = "RUB";
+
+    private int typeOfEntry = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
 
         FloatingActionButton fastInputDialog = (FloatingActionButton) findViewById(R.id.fab);
         fastInputDialog.setOnClickListener(new View.OnClickListener() {
@@ -139,11 +135,40 @@ public class MainActivity extends AppCompatActivity {
 
         final Spinner typeSpinner = (Spinner) promptView.findViewById(R.id.typeSpinner);
 
-        ArrayAdapter<?> timeSpinnerAdaptor =
-                ArrayAdapter.createFromResource(MainActivity.this, R.array.types, android.R.layout.simple_spinner_item);
-        timeSpinnerAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setSelection(0);
 
-        typeSpinner.setAdapter(timeSpinnerAdaptor);
+
+
+        ArrayAdapter<?> typeSpinnerAdaptor =
+                ArrayAdapter.createFromResource(MainActivity.this, R.array.types, android.R.layout.simple_spinner_item);
+        typeSpinnerAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        typeSpinner.setAdapter(typeSpinnerAdaptor);
+
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+                String selection = (String) parent.getItemAtPosition(position);
+                if (!TextUtils.isEmpty(selection)){
+                    if (selection.equals(getString(R.string.type_income))){
+                        typeOfEntry = WorkWithDBContract.MainTableEntry.TYPE_INCOME;
+                        Log.d(TAG, "onItemSelected: " + typeOfEntry);
+                    } else if (selection.equals(getString(R.string.type_spend))){
+                        typeOfEntry = WorkWithDBContract.MainTableEntry.TYPE_SPEND;
+                        Log.d(TAG, "onItemSelected: " + typeOfEntry);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
 
         alertDialogBuilder.setTitle(title);
         // setup a dialog window

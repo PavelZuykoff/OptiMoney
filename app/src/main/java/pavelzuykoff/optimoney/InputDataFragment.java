@@ -5,15 +5,19 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import pavelzuykoff.optimoney.data.WorkWithDBContract;
 
 /**
  * Created by novem on 13.08.2016.
@@ -28,6 +32,8 @@ public class InputDataFragment extends Fragment {
     int chosenDay = date.currentDay;
     int chosenMonth = date.currentMonth;
     int chosenYear = date.currentYear;
+
+    private int typeOfEntry = 0;
 
 
     private View view;
@@ -44,11 +50,34 @@ public class InputDataFragment extends Fragment {
         chosenDate = (TextView) view.findViewById(R.id.chosenDate);
         final Spinner typeSpinner = (Spinner) view.findViewById(R.id.typeSpinner);
 
-        ArrayAdapter<?> timeSpinnerAdaptor =
+        ArrayAdapter<?> typeSpinnerAdaptor =
                 ArrayAdapter.createFromResource(getActivity(), R.array.types, android.R.layout.simple_spinner_item);
-        timeSpinnerAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinnerAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        typeSpinner.setAdapter(timeSpinnerAdaptor);
+        typeSpinner.setAdapter(typeSpinnerAdaptor);
+
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+                String selection = (String) parent.getItemAtPosition(position);
+                if (!TextUtils.isEmpty(selection)){
+                    if (selection.equals(getString(R.string.type_income))){
+                        typeOfEntry = WorkWithDBContract.MainTableEntry.TYPE_INCOME;
+                        Log.d(TAG, "onItemSelected: " + typeOfEntry);
+                    } else if (selection.equals(getString(R.string.type_spend))){
+                        typeOfEntry = WorkWithDBContract.MainTableEntry.TYPE_SPEND;
+                        Log.d(TAG, "onItemSelected: " + typeOfEntry);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         chosenDate.setText(date.getCurrentDateStringFormat());
 

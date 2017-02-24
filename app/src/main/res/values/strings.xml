@@ -3,8 +3,14 @@
     <string name="action_settings">Настройки</string>
     <string name="about">О программе</string>
 
+    <string name="action_save">Сохранить</string>
+    <string name="action_delete">Удалить</string>
+
+    <string name="type_income">Доход</string>
+    <string name="type_spend">Расход</string>
+
     <string-array name="types">
-        <item>Доход</item>
-        <item>Расход</item>
+        <item>@string/type_income</item>
+        <item>@string/type_spend</item>
     </string-array>
 </resources>
