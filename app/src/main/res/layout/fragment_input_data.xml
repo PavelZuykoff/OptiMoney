@@ -51,7 +51,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/sum"
+        android:id="@+id/sumET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/chosenDate"

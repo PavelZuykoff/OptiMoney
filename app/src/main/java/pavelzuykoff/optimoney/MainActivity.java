@@ -19,23 +19,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
-
 import android.widget.Toast;
 
-import pavelzuykoff.optimoney.data.WorkWithDBContract;
+import pavelzuykoff.optimoney.data.OptimoneyDbContract;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    //константы для тостов
+    static final String ADDED_TO_DB = "Данные внесены в БД";
+    static final String NOTHING_TO_ADD = "Данные не введены";
+    static final String DATE_UPDATED = "Дата установлена";
+    static final String CANSELED = "Операция отменена";
 
-    private final String TAG = "happy";
+    static final String TAG = "happy";
+
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    public String currency = "RUB";
+    public static String currency = "RUB";
+    public int inputedSum;
 
     private int typeOfEntry = 0;
 
@@ -90,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    
- 
+
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new HomeFragment(), "Домой");
@@ -99,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new MoneyBoxFragment(), "Копилка");
         adapter.addFragment(new PeopleFragment(), "База");
         viewPager.setAdapter(adapter);
-
 
 
     }
@@ -117,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         datePicker.setCalendarViewShown(false);
         datePicker.setSpinnersShown(true);
 
-        CalendarValuesHandler date = new CalendarValuesHandler();
+        DateConverter date = new DateConverter();
 
         datePicker.init(date.currentYear, date.currentMonth,
                 date.currentDay, new DatePicker.OnDateChangedListener() {
@@ -126,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onDateChanged(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
                         Toast.makeText(getApplicationContext(),
-                                "onDateChanged", Toast.LENGTH_SHORT).show();
+                                DATE_UPDATED, Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -136,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
         final Spinner typeSpinner = (Spinner) promptView.findViewById(R.id.typeSpinner);
 
         typeSpinner.setSelection(0);
-
 
 
         ArrayAdapter<?> typeSpinnerAdaptor =
@@ -149,12 +153,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                 String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection)){
-                    if (selection.equals(getString(R.string.type_income))){
-                        typeOfEntry = WorkWithDBContract.MainTableEntry.TYPE_INCOME;
+                if (!TextUtils.isEmpty(selection)) {
+                    if (selection.equals(getString(R.string.type_income))) {
+                        typeOfEntry = OptimoneyDbContract.MainTableEntry.TYPE_INCOME;
                         Log.d(TAG, "onItemSelected: " + typeOfEntry);
-                    } else if (selection.equals(getString(R.string.type_spend))){
-                        typeOfEntry = WorkWithDBContract.MainTableEntry.TYPE_SPEND;
+                    } else if (selection.equals(getString(R.string.type_spend))) {
+                        typeOfEntry = OptimoneyDbContract.MainTableEntry.TYPE_SPEND;
                         Log.d(TAG, "onItemSelected: " + typeOfEntry);
                     }
 
@@ -169,14 +173,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         alertDialogBuilder.setTitle(title);
         // setup a dialog window
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Log.d(TAG, "Dialog OK");
-                        Toast.makeText(MainActivity.this, "Запись добавлена в БД.", Toast.LENGTH_SHORT).show();
+                        final EditText newSum = (EditText) findViewById(R.id.sum);
+                        inputedSum = Integer.parseInt(newSum.getText().toString());
+                        Log.d(TAG, "onClick: " + inputedSum);
+                        Toast.makeText(MainActivity.this, ADDED_TO_DB, Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel",

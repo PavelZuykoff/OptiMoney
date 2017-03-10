@@ -9,13 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Calendar;
-
 public class HomeFragment extends Fragment {
 
-    private final String TAG = "happy";
-
-    private CalendarValuesHandler date = new CalendarValuesHandler();
+    private DateConverter date = new DateConverter();
     private View view;
     private TextView currentDateTV;
 
@@ -24,7 +20,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d(TAG, "onCreate: ");
+        Log.d(MainActivity.TAG, "onCreate: ");
 
 
     }
@@ -34,7 +30,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        Log.d(TAG, "onCreateView: ");
+        Log.d(MainActivity.TAG, "onCreateView: ");
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         currentDateTV = (TextView) view.findViewById(R.id.current_date_tv);
