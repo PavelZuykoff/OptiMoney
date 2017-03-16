@@ -1,7 +1,9 @@
 package pavelzuykoff.optimoney;
 
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -23,7 +25,9 @@ import java.text.ParseException;
 
 import pavelzuykoff.optimoney.data.OptimoneyDbContract;
 
-import static pavelzuykoff.optimoney.MainActivity.TAG;
+
+import static pavelzuykoff.optimoney.MainActivity.*;
+
 
 
 /**
@@ -31,41 +35,47 @@ import static pavelzuykoff.optimoney.MainActivity.TAG;
  */
 public class InputDataFragment extends Fragment {
 
-    private DateConverter date = new DateConverter();
+//    private DateFactory DATE = new DateFactory();
+//
 
-    int chosenDay = date.currentDay;
-    int chosenMonth = date.currentMonth;
-    int chosenYear = date.currentYear;
 
     //переменные для БД
-    protected long dateUnixFomat;
-    protected double sum = 0;
-    private int typeOfEntry = OptimoneyDbContract.MainTableEntry.TYPE_INCOME;
-    protected int subTypeOfEntry = OptimoneyDbContract.MainTableEntry.SUBTYPE_OTHER;
-    protected String note = "";
-    protected long modificationTimeUnixFormat;
-    protected int deletedEntry = OptimoneyDbContract.MainTableEntry.DELETED_FALSE;
-    protected int synchronizedEntry = OptimoneyDbContract.MainTableEntry.SYNCHRONIZED_FALSE;
-    protected String userName = "default_user";
-    protected String deviceName = "default_device";
+//    protected long dateUnixFomat;
+//    protected double sum = 0;
+//    protected int typeOfEntry = OptimoneyDbContract.MainTableEntry.TYPE_INCOME;
+//    protected int subTypeOfEntry = OptimoneyDbContract.MainTableEntry.SUBTYPE_OTHER;
+//    protected String note = "";
+//    protected long modificationTimeUnixFormat;
+//    protected int deletedEntry = OptimoneyDbContract.MainTableEntry.DELETED_FALSE;
+//    protected int synchronizedEntry = OptimoneyDbContract.MainTableEntry.SYNCHRONIZED_FALSE;
+//    protected String userName = "default_user";
+//    protected String deviceName = "default_device";
 
     private View view;
-    private TextView chosenDate;
+    private TextView entryDateTV;
+    private EditText sumET;
+    private EditText noteText;
+    private Button addToDb;
+    private int chosenDay;
+    private int chosenMonth;
+    private int chosenYear;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d(MainActivity.TAG, "onCreateView: ");
+//        Log.d(TAG, "onCreateView: ");
         view = inflater.inflate(R.layout.fragment_input_data, container, false);
 
-        chosenDate = (TextView) view.findViewById(R.id.chosenDate);
-        final EditText sumET = (EditText) view.findViewById(R.id.sumET);
-        final EditText noteText = (EditText) view.findViewById(R.id.noteText);
-        Button addToDb = (Button) view.findViewById(R.id.inputToDatabase);
+        entryDateTV = (TextView) view.findViewById(R.id.chosenDate);
+        sumET = (EditText) view.findViewById(R.id.sumET);
+        noteText = (EditText) view.findViewById(R.id.noteText);
+        addToDb = (Button) view.findViewById(R.id.inputToDatabase);
 
         final Spinner typeSpinner = (Spinner) view.findViewById(R.id.typeSpinner);
+
+        setCurrentDate();
 
         ArrayAdapter<?> typeSpinnerAdaptor =
                 ArrayAdapter.createFromResource(getActivity(), R.array.types, android.R.layout.simple_spinner_item);
@@ -80,10 +90,10 @@ public class InputDataFragment extends Fragment {
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(getString(R.string.type_income))) {
                         typeOfEntry = OptimoneyDbContract.MainTableEntry.TYPE_INCOME;
-                        Log.d(MainActivity.TAG, "onItemSelected: " + typeOfEntry);
+                        Log.d(TAG, "onItemSelected: " + typeOfEntry);
                     } else if (selection.equals(getString(R.string.type_spend))) {
                         typeOfEntry = OptimoneyDbContract.MainTableEntry.TYPE_SPEND;
-                        Log.d(MainActivity.TAG, "onItemSelected: " + typeOfEntry);
+                        Log.d(TAG, "onItemSelected: " + typeOfEntry);
                     }
 
                 }
@@ -98,21 +108,22 @@ public class InputDataFragment extends Fragment {
 
         });
 
+        //текущая дата в формате unix
         try {
-            dateUnixFomat = new DateConverter().getDateUnixFormat(chosenDay, chosenMonth, chosenYear);
+            dateUnixFomat = new DateFactory().getDateUnixFormat(CURRENT_DAY, CURRENT_MONTH, CURRENT_YEAR);
         } catch (ParseException e) {
             dateUnixFomat = 0;
             e.printStackTrace();
         }
 
-        chosenDate.setText(date.getCurrentDateStringFormat());
+        entryDateTV.setText(DATE.getCurrentDateStringFormat());
 
- /*       Log.d(TAG, "сегодня: " + mDay + "." + date + "." + mYear);*/
+ /*       Log.d(TAG, "сегодня: " + mDay + "." + DATE + "." + mYear);*/
 
-        chosenDate.setOnClickListener(new View.OnClickListener() {
+        entryDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showInputDialog();
+                showInputDateDialog();
                 Log.d(MainActivity.TAG, "onClick: showInputDialog();");
 
 
@@ -122,51 +133,7 @@ public class InputDataFragment extends Fragment {
         addToDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (sumET.length() > 0) {
-                    //dateUnixFomat задана текущей датой по умолчанию или выбрана в календаре
-
-                    sum = Double.parseDouble(sumET.getText().toString());
-
-                    //typeOfEntry выбран спиннером
-
-                    //subTypeOfEntry по умолчанию
-
-                    if (noteText.length() > 0) {
-                        note = noteText.getText().toString();
-                    } else {
-                        note = "";
-                    }
-                    modificationTimeUnixFormat = System.currentTimeMillis();
-
-                    //deleted entry по умолчанию 0
-
-                    //syncronized entry по умолчанию 0
-
-                    //userName = default;
-
-                    //deviceName = default;
-
-                    Log.d(MainActivity.TAG, "дата: " + dateUnixFomat
-                            + " сумма: " + sum
-                            + " Тип: " + typeOfEntry
-                            + " Подтип: " + subTypeOfEntry
-                            + " заметка: " + note
-                            + " мод: " + modificationTimeUnixFormat
-                            + " удалена: " + deletedEntry
-                            + " синхронизирована: " + synchronizedEntry
-                            + " пользователь: " + userName
-                            + " девайс: " + deviceName);
-
-
-                    Toast.makeText(getActivity(), MainActivity.ADDED_TO_DB, Toast.LENGTH_SHORT).show();
-                } else {
-
-                    sum = 0;
-
-                    Toast.makeText(getActivity(), MainActivity.NOTHING_TO_ADD, Toast.LENGTH_SHORT).show();
-                }
-
+                insertNewEntry();
             }
         });
 
@@ -176,9 +143,83 @@ public class InputDataFragment extends Fragment {
 
     }
 
+    // метод для вставки строки с данными в БД
+
+    private void insertNewEntry() {
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+
+        // подготовка данных к вставке
+        if (sumET.length() > 0) {
+            //dateUnixFomat задана текущей датой по умолчанию или выбрана в календаре
+
+            sum = Double.parseDouble(sumET.getText().toString());
+
+            //typeOfEntry выбран спиннером
+
+            //subTypeOfEntry по умолчанию
+
+            if (noteText.length() > 0) {
+                note = noteText.getText().toString().trim();
+            } else {
+                note = "";
+            }
+            modificationTimeUnixFormat = System.currentTimeMillis() / 1000;
+
+            //deleted entry по умолчанию 0
+
+            //syncronized entry по умолчанию 0
+
+            //userName = default;
+
+            //deviceName = default;
+
+            Log.d(TAG, "дата: " + dateUnixFomat
+                    + " сумма: " + sum
+                    + " Тип: " + typeOfEntry
+                    + " Подтип: " + subTypeOfEntry
+                    + " заметка: " + note
+                    + " мод: " + modificationTimeUnixFormat
+                    + " удалена: " + deletedEntry
+                    + " синхронизирована: " + synchronizedEntry
+                    + " пользователь: " + userName
+                    + " девайс: " + deviceName);
+
+            values.put(OptimoneyDbContract.MainTableEntry.COLUMN_DATE, dateUnixFomat);
+            values.put(OptimoneyDbContract.MainTableEntry.COLUMN_SUM, sum);
+            values.put(OptimoneyDbContract.MainTableEntry.COLUMN_TYPE, typeOfEntry);
+            values.put(OptimoneyDbContract.MainTableEntry.COLUMN_SUBTYPE, subTypeOfEntry);
+            values.put(OptimoneyDbContract.MainTableEntry.COLUMN_COMMENT, note);
+            values.put(OptimoneyDbContract.MainTableEntry.COLUMN_MODIFICATION_TIME, modificationTimeUnixFormat);
+            values.put(OptimoneyDbContract.MainTableEntry.COLUMN_DELETED, deletedEntry);
+            values.put(OptimoneyDbContract.MainTableEntry.COLUMN_SYNCRONIZED, synchronizedEntry);
+            values.put(OptimoneyDbContract.MainTableEntry.COLUMN_USER, userName);
+            values.put(OptimoneyDbContract.MainTableEntry.COLUMN_DEVICE, deviceName);
+
+            long newRowId = db.insert(OptimoneyDbContract.MainTableEntry.TABLE_NAME, null, values);
+
+            if (newRowId == -1) {
+                // Если ID  -1, значит произошла ошибка
+                Toast.makeText(getActivity(), "ОШИБКА!", Toast.LENGTH_SHORT).show();
+            }
+
+            Toast.makeText(getActivity(), ADDED_TO_DB, Toast.LENGTH_SHORT).show();
+        } else {
+
+            sum = 0;
+
+            Toast.makeText(getActivity(), NOTHING_TO_ADD, Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
     // Диалог выбора даты
-    protected void showInputDialog() {
+    protected void showInputDateDialog() {
         String title = "Выберите дату:";
+
         // get prompts.xml view
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
         View promptView = layoutInflater.inflate(R.layout.chose_date_dialog, null);
@@ -187,11 +228,12 @@ public class InputDataFragment extends Fragment {
 
         DatePicker datePicker = (DatePicker) promptView.findViewById(R.id.datePicker);
 
+
         datePicker.setCalendarViewShown(true);
         datePicker.setSpinnersShown(false);
 
 
-        datePicker.init(chosenYear, chosenMonth, chosenDay, new DatePicker.OnDateChangedListener() {
+        datePicker.init(CURRENT_YEAR, CURRENT_MONTH, CURRENT_DAY, new DatePicker.OnDateChangedListener() {
 
             @Override
             public void onDateChanged(DatePicker view, int year,
@@ -202,7 +244,7 @@ public class InputDataFragment extends Fragment {
                 chosenYear = year;
 
                 try {
-                    dateUnixFomat = new DateConverter().getDateUnixFormat(chosenDay, chosenMonth, chosenYear);
+                    dateUnixFomat = new DateFactory().getDateUnixFormat(chosenDay, chosenMonth, chosenYear);
                 } catch (ParseException e) {
                     dateUnixFomat = 0;
                     e.printStackTrace();
@@ -219,17 +261,19 @@ public class InputDataFragment extends Fragment {
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.d(MainActivity.TAG, "Dialog OK");
-                        Toast.makeText(getActivity(), MainActivity.DATE_UPDATED, Toast.LENGTH_SHORT).show();
-                        String newDate = date.getChosenDateStringFormat(chosenDay, chosenMonth, chosenYear);
-                        chosenDate = (TextView) view.findViewById(R.id.chosenDate);
-                        chosenDate.setText(newDate);
+
+                        entryDateTV.setText(DATE.getChosenDateStringFormat(chosenDay, chosenMonth, chosenYear));
+                        setCurrentDate();
+                        Toast.makeText(getActivity(), DATE_UPDATED, Toast.LENGTH_SHORT).show();
+
+
                     }
                 })
                 .setNegativeButton("Cancel",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
+                                Toast.makeText(getActivity(), CANSELED, Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -237,5 +281,11 @@ public class InputDataFragment extends Fragment {
         AlertDialog alert = alertDialogBuilder.create();
         alert.show();
     }
+    private void setCurrentDate() {
+        chosenDay = CURRENT_DAY;
+        chosenMonth = CURRENT_MONTH;
+        chosenYear = CURRENT_YEAR;
+    }
+
 
 }

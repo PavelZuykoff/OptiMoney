@@ -11,8 +11,6 @@ public final class OptimoneyDbContract {
 
     }
 
-    ;
-
     public static final class MainTableEntry implements BaseColumns {
         public static final String TABLE_NAME = "main";
 
@@ -47,7 +45,22 @@ public final class OptimoneyDbContract {
 
     }
 
-    ;
+    public static final class MoneyBoxTableEntry implements BaseColumns {
 
+        public static final String TABLE_NAME = "money_box";
+
+        public static final String _ID = "ID";
+        public static final String COLUMN_TARGET_DATE = "target_date";
+        public static final String COLUMN_SAVE_SUM = "save_sum";
+        public static final String COLUMN_START_DATE = "start_date";
+        public static final String COLUMN_DAYLY_SAVED_SUM = "dayly_saved_sum";
+        public static final String COLUMN_TARGET_OBJECT = "target_object";
+        public static final String COLUMN_MODIFICATION_TIME = "modification_time";
+        public static final String COLUMN_DELETED = "deleted";
+        public static final String COLUMN_SYNCRONIZED = "synchronized";
+        public static final String COLUMN_USER = "user";
+        public static final String COLUMN_DEVICE = "device";
+
+    }
 
 }

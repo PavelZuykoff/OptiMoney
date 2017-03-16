@@ -17,7 +17,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="3dp"
-        android:text="31 Декабря 2015"
+        android:text=""
         android:textSize="25dp"
         android:textStyle="bold"
 
@@ -47,7 +47,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="3dp"
-        android:text="+7000 RUB"
+        android:text="+7000 ₽"
         android:textSize="25dp"
         android:textStyle="bold" />
 
@@ -76,7 +76,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="3dp"
-        android:text="1000 RUB"
+        android:text="1000 ₽"
         android:textSize="25dp"
         android:textStyle="bold" />
 

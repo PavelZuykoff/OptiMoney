@@ -51,7 +51,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="3dp"
-        android:text="0 RUB"
+        android:text="0 ₽"
         android:textSize="25dp"
         android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="3dp"
-        android:text="0 RUB"
+        android:text="0 ₽"
         android:textSize="25dp"
         android:textStyle="bold" />
 
@@ -109,7 +109,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="3dp"
-        android:text="0 ДНЕЙ"
+        android:text="0 Дней"
         android:textSize="25dp"
         android:textStyle="bold" />
 

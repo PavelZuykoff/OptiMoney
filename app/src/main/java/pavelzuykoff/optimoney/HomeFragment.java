@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import static pavelzuykoff.optimoney.MainActivity.*;
+
 public class HomeFragment extends Fragment {
 
-    private DateConverter date = new DateConverter();
     private View view;
     private TextView currentDateTV;
 
@@ -20,7 +21,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d(MainActivity.TAG, "onCreate: ");
+        Log.d(TAG, "onCreate: ");
 
 
     }
@@ -30,11 +31,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        Log.d(MainActivity.TAG, "onCreateView: ");
+        Log.d(TAG, "onCreateView: ");
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         currentDateTV = (TextView) view.findViewById(R.id.current_date_tv);
-        currentDateTV.setText(date.getCurrentDateStringFormat());
+        currentDateTV.setText(DATE.getCurrentDateStringFormat());
 
         return view;
 
