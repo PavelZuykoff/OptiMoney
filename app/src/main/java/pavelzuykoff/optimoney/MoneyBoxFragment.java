@@ -130,7 +130,7 @@ public class MoneyBoxFragment extends Fragment {
         String title = "Выберите дату:";
         // get prompts.xml view
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-        View promptView = layoutInflater.inflate(R.layout.chose_date_dialog, null);
+        View promptView = layoutInflater.inflate(R.layout.dialog_chose_date, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setView(promptView);
 
@@ -212,7 +212,7 @@ public class MoneyBoxFragment extends Fragment {
 
         // get prompts.xml view
         LayoutInflater layoutInflater = LayoutInflater.from(activity);
-        View promptView = layoutInflater.inflate(R.layout.input_sum_dialog, null);
+        View promptView = layoutInflater.inflate(R.layout.dialog_input_sum, null);
 
         final EditText sumInput = (EditText) promptView.findViewById(R.id.sumInputSumDialog);
         Log.d(TAG, "getActivity:" + getActivity());
@@ -240,7 +240,7 @@ public class MoneyBoxFragment extends Fragment {
                 } else {
                     saveSum = 0;
                     targetSum.setText(saveSum + " " + currency);
-                    Toast.makeText(getActivity(), NOTHING_TO_ADD, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), DATA_NOT_ADDED, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -318,10 +318,10 @@ public class MoneyBoxFragment extends Fragment {
                 Toast.makeText(getActivity(), "ОШИБКА!", Toast.LENGTH_SHORT).show();
             }
 
-            Toast.makeText(getActivity(), ADDED_TO_DB, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), DATA_ADDED_TO_DB, Toast.LENGTH_SHORT).show();
         } else {
             saveSum = 0;
-            Toast.makeText(getActivity(), NOTHING_TO_ADD + " " + CANSELED, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), DATA_NOT_ADDED + " " + CANSELED, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -426,7 +426,7 @@ public class MoneyBoxFragment extends Fragment {
                 if (daysPassed < 0) daysPassed = 0;
                 accumulatedSum.setText(daysPassed * currentDaylySave + " " + currency);
 
-                String dltt = ((currentTagretDate - currentStartDate) / 86400 + " дней");
+                String dltt = ((currentTagretDate - currentUnixDate) / 86400 + " дней");
                 daysLeftToTarget.setText(dltt);
                 }
 

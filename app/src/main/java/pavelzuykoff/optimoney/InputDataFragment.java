@@ -54,11 +54,13 @@ public class InputDataFragment extends Fragment {
     private View view;
     private TextView entryDateTV;
     private EditText sumET;
+    private TextView subTypeLegend;
     private EditText noteText;
     private Button addToDb;
     private int chosenDay;
     private int chosenMonth;
     private int chosenYear;
+    Boolean checkPassed = true; //проверка и установка значения подтипа
 
 
     @Override
@@ -72,8 +74,11 @@ public class InputDataFragment extends Fragment {
         sumET = (EditText) view.findViewById(R.id.sumET);
         noteText = (EditText) view.findViewById(R.id.noteText);
         addToDb = (Button) view.findViewById(R.id.inputToDatabase);
+        subTypeLegend = (TextView) view.findViewById(R.id.subTypeLegend);
 
         final Spinner typeSpinner = (Spinner) view.findViewById(R.id.typeSpinner);
+        final Spinner subTypeSpinner = (Spinner) view.findViewById(R.id.subTypeSpinner);
+
 
         setCurrentDate();
 
@@ -83,6 +88,17 @@ public class InputDataFragment extends Fragment {
 
         typeSpinner.setAdapter(typeSpinnerAdaptor);
 
+
+
+        final ArrayAdapter<?> incomeSpinnerAdaptor =
+                ArrayAdapter.createFromResource(getActivity(), R.array.income_types, android.R.layout.simple_spinner_item);
+        incomeSpinnerAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        final ArrayAdapter<?> spendSpinnerAdaptor =
+                ArrayAdapter.createFromResource(getActivity(), R.array.spend_types, android.R.layout.simple_spinner_item);
+        spendSpinnerAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
@@ -90,9 +106,13 @@ public class InputDataFragment extends Fragment {
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(getString(R.string.type_income))) {
                         typeOfEntry = OptimoneyDbContract.MainTableEntry.TYPE_INCOME;
+                        subTypeLegend.setText("Вид дохода:");
+                        subTypeSpinner.setAdapter(incomeSpinnerAdaptor);
                         Log.d(TAG, "onItemSelected: " + typeOfEntry);
                     } else if (selection.equals(getString(R.string.type_spend))) {
                         typeOfEntry = OptimoneyDbContract.MainTableEntry.TYPE_SPEND;
+                        subTypeLegend.setText("Вид расхода:");
+                        subTypeSpinner.setAdapter(spendSpinnerAdaptor);
                         Log.d(TAG, "onItemSelected: " + typeOfEntry);
                     }
 
@@ -133,14 +153,15 @@ public class InputDataFragment extends Fragment {
         addToDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int spinnerPos = subTypeSpinner.getSelectedItemPosition();
+                checkPassed = inspectSubTypeSpinner(spinnerPos);
+
                 insertNewEntry();
+                sumET.getText().clear();
+                noteText.getText().clear();
             }
         });
-
-
         return view;
-
-
     }
 
     // метод для вставки строки с данными в БД
@@ -151,8 +172,9 @@ public class InputDataFragment extends Fragment {
         ContentValues values = new ContentValues();
 
 
+
         // подготовка данных к вставке
-        if (sumET.length() > 0) {
+        if (sumET.length() > 0 && checkPassed) {
             //dateUnixFomat задана текущей датой по умолчанию или выбрана в календаре
 
             sum = Double.parseDouble(sumET.getText().toString());
@@ -205,12 +227,12 @@ public class InputDataFragment extends Fragment {
                 Toast.makeText(getActivity(), "ОШИБКА!", Toast.LENGTH_SHORT).show();
             }
 
-            Toast.makeText(getActivity(), ADDED_TO_DB, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), DATA_ADDED_TO_DB, Toast.LENGTH_SHORT).show();
         } else {
 
             sum = 0;
 
-            Toast.makeText(getActivity(), NOTHING_TO_ADD, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), DATA_NOT_ADDED, Toast.LENGTH_SHORT).show();
         }
 
 
@@ -222,7 +244,7 @@ public class InputDataFragment extends Fragment {
 
         // get prompts.xml view
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-        View promptView = layoutInflater.inflate(R.layout.chose_date_dialog, null);
+        View promptView = layoutInflater.inflate(R.layout.dialog_chose_date, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setView(promptView);
 

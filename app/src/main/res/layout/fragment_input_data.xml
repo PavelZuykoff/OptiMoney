@@ -30,6 +30,7 @@
         />
 
     <TextView
+        android:id="@+id/chosenDateLegend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -40,35 +41,44 @@
         android:textSize="12dp"
         android:textStyle="bold" />
 
+
+    <EditText
+        android:id="@+id/sumET"
+        android:layout_width="150dp"
+        android:layout_height="36dp"
+        android:layout_below="@id/chosenDate"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/tv_background_rounded_corners"
+        android:gravity="right|center"
+        android:hint="0.00 ₽"
+        android:inputType="numberDecimal"
+        android:maxLength="12"
+        android:paddingRight="10dp"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/sumLegend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/chosenDate"
+        android:layout_below="@id/chosenDateLegend"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="40dp"
-        android:text="Сумма:"
-        android:textSize="16dp"
+        android:background="@drawable/legend_background_rounded_corners"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="СУММА:"
+        android:textSize="12dp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/sumET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/chosenDate"
-        android:layout_marginTop="35dp"
-        android:layout_toRightOf="@id/sumLegend"
-        android:inputType="numberDecimal"
-        android:maxLength="9"
-        android:textAlignment="textEnd"
-        android:textSize="16dp"
-        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/typeLegend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sumLegend"
-        android:layout_marginTop="40dp"
+        android:layout_below="@id/chosenDate"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@id/sumET"
         android:text="Тип:"
         android:textSize="16dp"
         android:textStyle="bold" />
@@ -77,27 +87,50 @@
         android:id="@+id/typeSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sumLegend"
-        android:layout_marginTop="36dp"
-        android:layout_toRightOf="@id/typeLegend" />
+        android:layout_below="@id/chosenDate"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/typeLegend" />
+
+
+    <TextView
+        android:id="@+id/subTypeLegend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sumET"
+        android:layout_marginTop="25dp"
+        android:text="Вид:"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+
+    <Spinner
+        android:id="@+id/subTypeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sumET"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/subTypeLegend" />
 
     <TextView
         android:id="@+id/noteLegend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/typeLegend"
-        android:layout_marginTop="40dp"
+        android:layout_below="@id/subTypeLegend"
+        android:layout_marginTop="25dp"
         android:text="Заметка:"
         android:textSize="16dp"
         android:textStyle="bold" />
+
 
     <EditText
         android:id="@+id/noteText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/typeLegend"
-        android:layout_marginTop="40dp"
-        android:layout_toRightOf="@id/noteLegend"
+        android:layout_below="@id/subTypeSpinner"
+        android:layout_marginTop="10dp"
+        android:maxLength="100"
+        android:hint="100 символов"
+        android:layout_toRightOf="@+id/noteLegend"
         android:textSize="16dp" />
 
     <Button

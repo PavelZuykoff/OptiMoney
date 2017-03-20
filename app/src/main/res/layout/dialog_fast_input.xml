@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:background="@color/colorPrimarySuperLight"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorPrimarySuperLight"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -25,10 +25,7 @@
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         android:scaleY="0.8"
-        android:spinnersShown="true"
-
-
-        />
+        android:spinnersShown="true" />
 
     <TextView
         android:id="@+id/sumLegend"
@@ -41,12 +38,12 @@
 
     <EditText
         android:id="@+id/sum"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="130dp"
         android:layout_toRightOf="@id/sumLegend"
         android:inputType="numberDecimal"
-        android:maxLength="9"
+        android:maxLength="12"
         android:textAlignment="textEnd"
         android:textSize="16dp"
         android:textStyle="bold" />
@@ -55,9 +52,9 @@
         android:id="@+id/typeLegend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/sum"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="140dp"
+        android:layout_toRightOf="@id/sum"
         android:text="Тип:"
         android:textSize="16dp"
         android:textStyle="bold" />
@@ -67,14 +64,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
-        android:layout_toRightOf="@id/typeLegend"
-        />
+        android:layout_toRightOf="@id/typeLegend" />
+
+    <TextView
+        android:id="@+id/subTypeLegend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sumLegend"
+        android:layout_marginTop="30dp"
+        android:text="Вид:"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/subTypeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sumLegend"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@id/subTypeLegend" />
 
     <TextView
         android:id="@+id/noteLegend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sumLegend"
+        android:layout_below="@id/subTypeLegend"
         android:layout_marginTop="30dp"
         android:text="Заметка:"
         android:textSize="16dp"
@@ -84,8 +98,10 @@
         android:id="@+id/noteText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sumLegend"
+        android:layout_below="@id/subTypeLegend"
         android:layout_marginTop="20dp"
+        android:maxLength="100"
+        android:hint="100 символов"
         android:layout_toRightOf="@id/noteLegend"
         android:textSize="16dp" />
 

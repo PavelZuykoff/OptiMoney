@@ -1,16 +1,57 @@
 <resources>
     <string name="app_name">OptiMoney</string>
-    <string name="action_settings">Настройки</string>
+    <string name="main_settings">Настройки</string>
     <string name="about">О программе</string>
 
     <string name="action_save">Сохранить</string>
     <string name="action_delete">Удалить</string>
 
-    <string name="type_income">Доход</string>
+
     <string name="type_spend">Расход</string>
+    <string name="type_income">Доход</string>
+
+    <string name="salary_income">Зарплата</string>
+    <string name="additional_income">Доп. Доход</string>
+    <string name="starting_sum">Стартовая сумму</string>
+
+    <string name="mandatory_payment">Оплата счетов</string>
+    <string name="food">Еда</string>
+    <string name="alcohol">Алкоголь</string>
+    <string name="health">Здоровье</string>
+    <string name="entertainment">Развлечения/Отдых</string>
+    <string name="transport">Транспорт</string>
+    <string name="fine">Штраф</string>
+    <string name="clothes">Одежда/Обувь</string>
+    <string name="electronics">Электроника/Техника</string>
+    <string name="interior">Мебель/Интерьер</string>
+    <string name="charity">Благотворительность</string>
+    <string name="other">Другое</string>
+
 
     <string-array name="types">
-        <item>@string/type_income</item>
         <item>@string/type_spend</item>
+        <item>@string/type_income</item>
     </string-array>
+
+    <string-array name="income_types">
+        <item>@string/salary_income</item>
+        <item>@string/additional_income</item>
+    </string-array>
+
+    <string-array name="spend_types">
+        <item>@string/mandatory_payment</item>
+        <item>@string/food</item>
+        <item>@string/alcohol</item>
+        <item>@string/health</item>
+        <item>@string/entertainment</item>
+        <item>@string/transport</item>
+        <item>@string/fine</item>
+        <item>@string/clothes</item>
+        <item>@string/electronics</item>
+        <item>@string/interior</item>
+        <item>@string/charity</item>
+        <item>@string/other</item>
+    </string-array>
+
+
 </resources>

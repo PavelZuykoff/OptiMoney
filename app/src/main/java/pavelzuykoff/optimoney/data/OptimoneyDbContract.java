@@ -26,15 +26,27 @@ public final class OptimoneyDbContract {
         public static final String COLUMN_USER = "user";
         public static final String COLUMN_DEVICE = "device";
 
-        public static final int TYPE_INCOME = 0;
-        public static final int TYPE_SPEND = 1;
+        public static final int TYPE_SPEND = 0;
+        public static final int TYPE_INCOME = 1;
 
-        public static final int SUBTYPE_OTHER = 0;
-        public static final int SUBTYPE_FOOD = 1;
-        public static final int SUBTYPE_MEDICINE = 2;
-        public static final int SUBTYPE_CAR = 3;
+        //типы доходов
+        public static final int SUBTYPE_INCOME_START = 0;
+        public static final int SUBTYPE_INCOME_SALARY = 1;
+        public static final int SUBTYPE_INCOME_ADDITIONAL = 2;
 
-        // TODO сделать болшьше подтипов
+        //типы расходов
+        public static final int SUBTYPE_SPEND_MANDATORY_PAYMENTS = 3;
+        public static final int SUBTYPE_SPEND_FOOD = 4;
+        public static final int SUBTYPE_SPEND_ALCO = 5;
+        public static final int SUBTYPE_SPEND_HEALTH = 6;
+        public static final int SUBTYPE_SPEND_ENTERTAINMENT = 7;
+        public static final int SUBTYPE_SPEND_TRANSPORT = 8;
+        public static final int SUBTYPE_SPEND_FINE = 9;
+        public static final int SUBTYPE_SPEND_CLOTHES = 10;
+        public static final int SUBTYPE_SPEND_ELECTRONICS = 11;
+        public static final int SUBTYPE_SPEND_INTERIOR = 12;
+        public static final int SUBTYPE_SPEND_CHARITY = 13;
+        public static final int SUBTYPE_SPEND_OTHER = 14;
 
         public static final int DELETED_FALSE = 0;
         public static final int DELETED_TRUE = 1;

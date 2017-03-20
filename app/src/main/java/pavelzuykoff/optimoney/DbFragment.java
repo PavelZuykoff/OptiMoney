@@ -1,10 +1,13 @@
 package pavelzuykoff.optimoney;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +16,7 @@ import android.widget.TextView;
 
 import pavelzuykoff.optimoney.data.OptimoneyDbContract;
 
-import static pavelzuykoff.optimoney.MainActivity.mDbHelper;
+import static pavelzuykoff.optimoney.MainActivity.*;
 
 
 /**
@@ -23,18 +26,28 @@ import static pavelzuykoff.optimoney.MainActivity.mDbHelper;
 
 public class DbFragment extends Fragment {
 
+    private final String TAG = "DBFragment";
+
     View view;
     ImageView image;
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.d(TAG, "onAttach: ");
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: ");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
+
         view =  inflater.inflate(R.layout.fragment_db, container, false);
 
         image = (ImageView) view.findViewById(R.id.edit_icon);
@@ -46,19 +59,55 @@ public class DbFragment extends Fragment {
 
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "onActivityCreated: ");
+    }
 
     @Override
     public void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart: ");
         displayDatabaseInfo();
         displayMoneyBoxInfo();
-
-
-
-
-
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(TAG, "onDestroyView: ");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "onDetach: ");
+    }
 
     private void displayDatabaseInfo() {
         // Создадим и откроем для чтения базу данных
